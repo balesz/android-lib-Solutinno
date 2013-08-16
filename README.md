@@ -1,4 +1,4 @@
-android-lib-Common
+android-lib-Solutinno
 ==================
 
-Common library to android projects
+Common library for android projects
