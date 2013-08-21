@@ -1,21 +1,21 @@
 package net.solutinno.widget;
 
-import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
 public class ToastValidationProvider
 {
-    Context context;
-
     OnValidate onValidate;
 
     ToastHandler toastHandler;
 
     public ToastValidationProvider(ToastHandler toastHandler) {
         this.toastHandler = toastHandler;
-        this.context = toastHandler.getContext();
+    }
+
+    public void setOnValidate(OnValidate onValidate) {
+        this.onValidate = onValidate;
     }
 
     public boolean validate(View[] views) {
@@ -32,6 +32,11 @@ public class ToastValidationProvider
         return true;
     }
 
+    private Integer onValidate(View view) {
+        if (this.onValidate != null) return onValidate.validate(view);
+        else return null;
+    }
+
     private void showNotification(View view, int resId) {
         view.requestFocus();
         int[] loc = new int[2]; view.getLocationOnScreen(loc);
@@ -41,16 +46,8 @@ public class ToastValidationProvider
         toastHandler.show(toast);
     }
 
-    private Integer onValidate(View view) {
-        if (this.onValidate != null) return onValidate.validate(view);
-        else return null;
-    }
-
-    public void setOnValidate(OnValidate onValidate) {
-        this.onValidate = onValidate;
-    }
-
-    public static interface OnValidate {
+    public static interface OnValidate
+    {
         Integer validate(View view);
     }
 }

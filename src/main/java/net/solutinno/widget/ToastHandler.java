@@ -35,7 +35,7 @@ public class ToastHandler
     }
 
     public void show(Toast toast) {
-        if (this.toast != null) this.toast.cancel();
+        cancel();
         toast.show();
         this.toast = toast;
     }
