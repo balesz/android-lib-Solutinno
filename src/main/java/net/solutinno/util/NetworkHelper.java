@@ -1,8 +1,8 @@
 package net.solutinno.util;
 
-import java.io.BufferedInputStream;
+import com.google.common.io.ByteStreams;
+
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -38,17 +38,8 @@ public class NetworkHelper
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.connect();
 
-        InputStream input = new BufferedInputStream(url.openStream());
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-        byte data[] = new byte[1024]; int count;
-        while ((count = input.read(data)) != -1) {
-            output.write(data, 0, count);
-        }
-
-        output.flush();
-        output.close();
-        input.close();
+        ByteStreams.copy(url.openStream(), output);
 
         return output;
     }
