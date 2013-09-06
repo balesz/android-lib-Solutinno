@@ -28,9 +28,11 @@ proguard/
 *.iws
 .idea/
 
+# Mac related files
+.DS_Store
+
 # folders related to builds
 .gradle/
 build/
 */build/
 out/
-local.properties
