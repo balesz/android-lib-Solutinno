@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     compile 'com.google.guava:guava:14.0.+'
+    compile 'com.nineoldandroids:library:2.4.+'
 }
 
 android {
