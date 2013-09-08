@@ -13,6 +13,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +22,8 @@ import java.util.Map;
 public class SpeechHelper
 {
     private static Context mContext;
-    private static final Map<String, Locale> mLanguages = new HashMap<String, Locale>();
+    private static final List<String> mLanguageKeys = new ArrayList<String>();
+    private static final List<Locale> mLanguageValues = new ArrayList<Locale>();
     private static boolean mIsInitialised;
 
     public static void initialise(Context context) {
@@ -41,21 +43,30 @@ public class SpeechHelper
             Bundle extras = getResultExtras(true);
             assert extras != null;
             if (extras.containsKey(RecognizerIntent.EXTRA_SUPPORTED_LANGUAGES)) {
-                List<String> languages = extras.getStringArrayList(RecognizerIntent.EXTRA_SUPPORTED_LANGUAGES);
-                assert languages != null;
+                String[] languages = extras.getStringArrayList(RecognizerIntent.EXTRA_SUPPORTED_LANGUAGES).toArray(new String[1]);
+                Arrays.sort(languages);
                 for (String lang : languages) {
                     String[] loc = Iterables.toArray(Splitter.on('-').split(lang), String.class);
-                    if (loc.length == 3) mLanguages.put(lang, new Locale(loc[0], loc[1], loc[2]));
-                    else if (loc.length == 2) mLanguages.put(lang, new Locale(loc[0], loc[1]));
-                    else if (loc.length == 1) mLanguages.put(lang, new Locale(loc[0]));
+                    Locale locale = null;
+                    if (loc.length == 3) locale = new Locale(loc[0], loc[1], loc[2]);
+                    else if (loc.length == 2) locale = new Locale(loc[0], loc[1]);
+                    else if (loc.length == 1) locale = new Locale(loc[0]);
+                    mLanguageKeys.add(lang);
+                    mLanguageValues.add(locale);
                 }
             }
             mIsInitialised = true;
         }
     };
 
-    public static Map<String, Locale> getLanguages() {
-        return Maps.newHashMap(mLanguages);
+    public static String[] getLanguageKeys() {
+        return mLanguageKeys.toArray(new String[1]);
+    }
+
+    public static String[] getLanguageNames() {
+        ArrayList<String> result = new ArrayList<String>();
+        for (Locale loc : mLanguageValues) result.add(String.format("%s, %s", loc.getDisplayLanguage(), loc.getDisplayCountry()));
+        return result.toArray(new String[1]);
     }
 
     public static boolean startSpeechRecognition(Fragment fragment, int requestCode, String language) {
