@@ -20,4 +20,10 @@ public class SoftKeyboardHelper
         }
 
     }
+
+    public static boolean isSoftKeyboardActive(Activity activity) {
+        if (activity == null) return false;
+        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        return inputManager.isAcceptingText();
+    }
 }
