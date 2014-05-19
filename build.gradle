@@ -1,23 +1,4 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
-    }
-}
-
 apply plugin: 'android-library'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile 'com.android.support:support-v4:19.+'
-    compile 'com.google.guava:guava:16.+'
-    compile 'com.nineoldandroids:library:2.4.+'
-}
 
 android {
     compileSdkVersion 19
@@ -29,4 +10,10 @@ android {
         minSdkVersion 10
         targetSdkVersion 19
     }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:19.+'
+    compile 'com.google.guava:guava:16.+'
+    compile 'com.nineoldandroids:library:2.4.+'
 }
