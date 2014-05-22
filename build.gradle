@@ -1,9 +1,9 @@
 apply plugin: 'android-library'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
-
+    buildToolsVersion '19.1'
     defaultConfig {
         versionCode 1
         versionName "1.0"
@@ -16,4 +16,15 @@ dependencies {
     compile 'com.android.support:support-v4:19.+'
     compile 'com.google.guava:guava:16.+'
     compile 'com.nineoldandroids:library:2.4.+'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'net.solutinno'
+            artifactId 'android-lib-Solutinno'
+            version android.defaultConfig.versionName
+            artifact file("build/libs/${artifactId}.aar")
+        }
+    }
 }
