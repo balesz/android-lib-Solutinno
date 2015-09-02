@@ -1,19 +1,19 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '20'
+    compileSdkVersion 23
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         versionCode 1
         versionName "1.0"
         minSdkVersion 10
-        targetSdkVersion 19
+        targetSdkVersion 23
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:20.+'
-    compile 'com.google.guava:guava:17.+'
-    compile 'com.nineoldandroids:library:2.4.+'
+    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.nineoldandroids:library:2.4.0'
 }
